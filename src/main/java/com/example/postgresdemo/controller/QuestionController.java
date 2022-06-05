@@ -39,12 +39,12 @@ public class QuestionController {
 //    }
 
 
-    @DeleteMapping("/questions/{questionId}")
+/*    @DeleteMapping("/questions/{questionId}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
         return questionRepository.findById(questionId)
                 .map(question -> {
                     questionRepository.delete(question);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
-    }
+    }*/
 }

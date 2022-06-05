@@ -1,13 +1,13 @@
 package com.example.postgresdemo.service;
 
 import com.example.postgresdemo.model.Answer;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AnswerService {
 
-    Optional<Answer> findById(int id);
+    Answer findById(int id);
 
     List<Answer> findAll();
 

@@ -4,18 +4,18 @@ import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.repository.AnswerRepository;
 import com.example.postgresdemo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
+@Service
 public class AnswerServiceImpl implements AnswerService {
 
     @Autowired
     AnswerRepository answerRepository;
 
     @Override
-    public Optional<Answer> findById(int id) {
+    public Answer findById(int id) {
         return answerRepository.findById(id);
     }
 
