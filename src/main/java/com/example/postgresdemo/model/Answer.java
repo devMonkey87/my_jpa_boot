@@ -2,17 +2,17 @@ package com.example.postgresdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "answers")
 public class Answer extends AuditModel {
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(generator = "answer_generator")
     @SequenceGenerator(

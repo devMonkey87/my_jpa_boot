@@ -1,6 +1,7 @@
 package com.example.postgresdemo.controller;
 
 import com.example.postgresdemo.exception.ResourceNotFoundException;
+import com.example.postgresdemo.mapper.QuestionMapper;
 import com.example.postgresdemo.model.Question;
 import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.QuestionService;
@@ -16,6 +17,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @GetMapping("/questions")
     public Page<Question> getQuestions(Pageable pageable) {

@@ -1,6 +1,8 @@
 package com.example.postgresdemo.controller;
 
+import com.example.postgresdemo.dto.AnswerDTO;
 import com.example.postgresdemo.exception.ResourceNotFoundException;
+import com.example.postgresdemo.mapper.AnswerMapperImpl;
 import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.AnswerService;
@@ -23,6 +25,9 @@ public class AnswerController {
     @Autowired
     private QuestionRepository questionService;
 
+    @Autowired
+    private AnswerMapperImpl mapper;
+
     /*
     @GetMapping("/questions/{questionId}/answers")
     public List<Answer> getAnswersByQuestionId(@PathVariable int questionId) {
@@ -30,13 +35,15 @@ public class AnswerController {
     }*/
 
     @PostMapping("/questions/{questionId}/answers")
-    public Answer addAnswer(@PathVariable Integer questionId,
-                            @Valid @RequestBody Answer answer) {
-        return questionService.findById(questionId)
+    public AnswerDTO addAnswer(@PathVariable Integer questionId,
+                               @Valid @RequestBody Answer answer) {
+        Answer answer1 = answerService.findById(questionId)
                 .map(question -> {
                     answer.setQuestion(question);
                     return answerService.saveOrUpdate(answer);
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
+
+        return mapper.toDto(answer1);
     }
 //
 //    @PutMapping("/questions/{questionId}/answers/{answerId}")
