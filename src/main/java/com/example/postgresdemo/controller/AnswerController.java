@@ -4,17 +4,19 @@ import com.example.postgresdemo.dto.AnswerDTO;
 import com.example.postgresdemo.exception.ResourceNotFoundException;
 import com.example.postgresdemo.mapper.AnswerMapperImpl;
 import com.example.postgresdemo.model.Answer;
+import com.example.postgresdemo.model.Question;
 import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.AnswerService;
+import com.example.postgresdemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class AnswerController {
@@ -23,21 +25,23 @@ public class AnswerController {
     private AnswerService answerService;
 
     @Autowired
-    private QuestionRepository questionService;
+    private QuestionService questionService;
 
     @Autowired
     private AnswerMapperImpl mapper;
 
-    /*
     @GetMapping("/questions/{questionId}/answers")
-    public List<Answer> getAnswersByQuestionId(@PathVariable int questionId) {
-        return answerService.findById(questionId);
-    }*/
+    public List<AnswerDTO> getAnswersByQuestionId(@PathVariable int questionId) {
+        Optional<Question> question = questionService.findById(questionId);
+        //FIXME test this:
+        return question.get().getAnswers().stream().map(answer -> mapper.toDto(answer)).collect(Collectors.toList());
+
+    }
 
     @PostMapping("/questions/{questionId}/answers")
     public AnswerDTO addAnswer(@PathVariable Integer questionId,
                                @Valid @RequestBody Answer answer) {
-        Answer answer1 = answerService.findById(questionId)
+        Answer answer1 = questionService.findById(questionId)
                 .map(question -> {
                     answer.setQuestion(question);
                     return answerService.saveOrUpdate(answer);
