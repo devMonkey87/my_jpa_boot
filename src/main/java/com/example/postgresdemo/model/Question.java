@@ -1,14 +1,17 @@
 package com.example.postgresdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "questions")
+@JsonPropertyOrder({"id", "title", "description", "answers" })
 public class Question extends AuditModel {
 
     private static final long serialVersionUID = -5502043778089640767L;
@@ -29,5 +32,7 @@ public class Question extends AuditModel {
     @Column(columnDefinition = "text")
     private String description;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+    private List<Answer> answers;
 
 }
