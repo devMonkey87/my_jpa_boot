@@ -1,6 +1,7 @@
 package com.example.postgresdemo.controller;
 
 import com.example.postgresdemo.exception.ResourceNotFoundException;
+import com.example.postgresdemo.mapper.QuestionMapper;
 import com.example.postgresdemo.model.Question;
 import com.example.postgresdemo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @GetMapping("/questions")
     public Page<Question> getQuestions(Pageable pageable) {
