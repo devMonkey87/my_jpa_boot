@@ -5,8 +5,10 @@ import com.example.postgresdemo.dto.QuestionDTO;
 import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.model.Question;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+
 public interface QuestionMapper {
 
     Question toModel(QuestionDTO dto);
