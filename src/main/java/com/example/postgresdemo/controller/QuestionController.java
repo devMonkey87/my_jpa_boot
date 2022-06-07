@@ -1,5 +1,6 @@
 package com.example.postgresdemo.controller;
 
+import com.example.postgresdemo.dto.QuestionDTO;
 import com.example.postgresdemo.exception.ResourceNotFoundException;
 import com.example.postgresdemo.mapper.QuestionMapper;
 import com.example.postgresdemo.model.Question;
@@ -28,8 +29,8 @@ public class QuestionController {
 
 
     @PostMapping("/questions")
-    public Question createQuestion(@Valid @RequestBody Question question) {
-        return questionService.saveOrUpdate(question);
+    public QuestionDTO createQuestion(@Valid @RequestBody Question question) {
+        return questionMapper.toDto(questionService.saveOrUpdate(question));
     }
 
     @PutMapping("/questions/{questionId}")
