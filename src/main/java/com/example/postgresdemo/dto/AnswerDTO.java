@@ -1,13 +1,11 @@
 package com.example.postgresdemo.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class AnswerDTO extends AuditModelDTO {
-
     private int id;
     private String text;
-    private QuestionDTO question;
-
-
 }
