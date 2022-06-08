@@ -2,9 +2,9 @@ package com.example.postgresdemo.controller;
 
 import com.example.postgresdemo.dto.QuestionDTO;
 import com.example.postgresdemo.exception.ResourceNotFoundException;
+import com.example.postgresdemo.mapper.CycleAvoidingMappingContext;
 import com.example.postgresdemo.mapper.QuestionMapper;
 import com.example.postgresdemo.model.Question;
-import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,9 +30,10 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public QuestionDTO createQuestion(@Valid @RequestBody Question question) {
-        return questionMapper.toDto(questionService.saveOrUpdate(question));
+        Question question1 = questionService.saveOrUpdate(question);
+        QuestionDTO questionDTO = questionMapper.toDto(question1, new CycleAvoidingMappingContext());
+        return questionDTO;
     }
-
     @PutMapping("/questions/{questionId}")
     public Question updateQuestion(@PathVariable Integer questionId,
                                    @Valid @RequestBody Question questionRequest) {

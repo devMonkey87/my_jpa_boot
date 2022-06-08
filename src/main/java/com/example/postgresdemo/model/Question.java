@@ -1,7 +1,10 @@
 package com.example.postgresdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -10,7 +13,8 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "questions")
 @JsonPropertyOrder({"id", "title", "description", "answers" })
 public class Question extends AuditModel {
@@ -33,6 +37,7 @@ public class Question extends AuditModel {
     @Column(columnDefinition = "text")
     private String description;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
     private List<Answer> answers;
 

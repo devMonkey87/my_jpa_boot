@@ -3,6 +3,7 @@ package com.example.postgresdemo.controller;
 import com.example.postgresdemo.dto.AnswerDTO;
 import com.example.postgresdemo.exception.ResourceNotFoundException;
 import com.example.postgresdemo.mapper.AnswerMapperImpl;
+import com.example.postgresdemo.mapper.CycleAvoidingMappingContext;
 import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.model.Question;
 import com.example.postgresdemo.repository.QuestionRepository;
@@ -30,11 +31,13 @@ public class AnswerController {
     @Autowired
     private AnswerMapperImpl mapper;
 
+    public AnswerController() {
+    }
+
     @GetMapping("/questions/{questionId}/answers")
     public List<AnswerDTO> getAnswersByQuestionId(@PathVariable int questionId) {
         Optional<Question> question = questionService.findById(questionId);
-        //FIXME test this:
-        return question.get().getAnswers().stream().map(answer -> mapper.toDto(answer)).collect(Collectors.toList());
+        return question.get().getAnswers().stream().map(answer -> mapper.toDto(answer, new CycleAvoidingMappingContext())).collect(Collectors.toList());
 
     }
 
@@ -47,7 +50,9 @@ public class AnswerController {
                     return answerService.saveOrUpdate(answer);
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
 
-        return mapper.toDto(answer1);
+        AnswerDTO answerDTO = mapper.toDto(answer1, new CycleAvoidingMappingContext());
+
+        return new AnswerDTO();
     }
 //
 //    @PutMapping("/questions/{questionId}/answers/{answerId}")
