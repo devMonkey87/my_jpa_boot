@@ -13,4 +13,6 @@ public interface AnswerService {
 
     Answer saveOrUpdate(Answer answer);
 
+    void deleteById(int id);
+
 }

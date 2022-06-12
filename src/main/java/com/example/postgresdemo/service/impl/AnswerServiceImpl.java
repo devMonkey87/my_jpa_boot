@@ -6,6 +6,7 @@ import com.example.postgresdemo.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -37,5 +38,14 @@ public class AnswerServiceImpl implements AnswerService {
             answer1.setCreatedAt(answer.getCreatedAt());
             return answerRepository.save(answer1);
         }
+    }
+
+    @Override
+    public void deleteById(int id) {
+
+        if (!answerRepository.existsById(id)){
+            throw new EntityNotFoundException("The entity with provided ID does not exists");
+        }
+        answerRepository.deleteById(id);
     }
 }

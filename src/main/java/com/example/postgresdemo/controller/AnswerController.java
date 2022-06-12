@@ -10,11 +10,11 @@ import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.AnswerService;
 import com.example.postgresdemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +27,9 @@ public class AnswerController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     private AnswerMapperImpl mapper;
@@ -50,38 +53,21 @@ public class AnswerController {
                     return answerService.saveOrUpdate(answer);
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
 
-        AnswerDTO answerDTO = mapper.toDto(answer1, new CycleAvoidingMappingContext());
-
-        return new AnswerDTO();
+        return mapper.toDto(answer1, new CycleAvoidingMappingContext());
     }
-//
-//    @PutMapping("/questions/{questionId}/answers/{answerId}")
-//    public Answer updateAnswer(@PathVariable Long questionId,
-//                               @PathVariable Long answerId,
-//                               @Valid @RequestBody Answer answerRequest) {
-//        if(!questionRepository.existsById(questionId)) {
-//            throw new ResourceNotFoundException("Question not found with id " + questionId);
-//        }
-//
-//        return answerRepository.findById(answerId)
-//                .map(answer -> {
-//                    answer.setText(answerRequest.getText());
-//                    return answerRepository.save(answer);
-//                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
-//    }
-//
-//    @DeleteMapping("/questions/{questionId}/answers/{answerId}")
-//    public ResponseEntity<?> deleteAnswer(@PathVariable Long questionId,
-//                                          @PathVariable Long answerId) {
-//        if(!questionRepository.existsById(questionId)) {
-//            throw new ResourceNotFoundException("Question not found with id " + questionId);
-//        }
-//
-//        return answerRepository.findById(answerId)
-//                .map(answer -> {
-//                    answerRepository.delete(answer);
-//                    return ResponseEntity.ok().build();
-//                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + answerId));
-//
-//    }
+
+    @PutMapping("/answers/{answerId}")
+    public AnswerDTO updateAnswer(@PathVariable int answerId,
+                               @Valid @RequestBody Answer answerRequest) {
+        return mapper.toDto(answerService.saveOrUpdate(answerRequest), new CycleAvoidingMappingContext());
+    }
+
+    @DeleteMapping("/questions/{questionId}/answers/{answerId}")
+    public ResponseEntity<Integer> deleteAnswer(@PathVariable Integer questionId,
+                                          @PathVariable Integer answerId) {
+      answerService.deleteById(answerId);
+
+      return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+
+    }
 }
