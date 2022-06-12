@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
@@ -15,9 +16,19 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "questions")
 @JsonPropertyOrder({"id", "title", "description", "answers" })
 public class Question extends AuditModel {
+
+
+    public Question(int id, String title, String description, List<Answer> answers) {
+
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.answers = answers;
+    }
 
     private static final long serialVersionUID = -5502043778089640767L;
 
