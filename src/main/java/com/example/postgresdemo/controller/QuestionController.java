@@ -45,7 +45,6 @@ public class QuestionController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
     }
 
-
     @DeleteMapping("/questions/{questionId}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Integer questionId) {
         return questionService.findById(questionId)
