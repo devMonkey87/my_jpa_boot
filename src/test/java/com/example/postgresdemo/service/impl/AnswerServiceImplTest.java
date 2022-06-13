@@ -62,14 +62,12 @@ class AnswerServiceImplTest {
 
     @Test
     void deleteAndThrowException() {
-
-        //TODO pending test
-/*        Mockito.doReturn(false).when(repository).existsById(1);
-
+        //When testing void methods, like deleteById, doThrow has to be used insetad of thenThrows
+        Mockito.doReturn(false).when(repository).existsById(1);
         AnswerServiceImpl dictMock = Mockito.mock(AnswerServiceImpl.class);
-        Mockito.when(dictMock.deleteById(Mockito.anyInt()))
-                .thenThrow(EntityNotFoundException.class);*/
-
+        Mockito.doThrow(EntityNotFoundException.class)
+                .when(dictMock)
+                .deleteById(Mockito.anyInt());
     }
 
     @Test
