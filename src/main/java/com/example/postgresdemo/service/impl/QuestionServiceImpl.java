@@ -9,9 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -41,13 +40,15 @@ public class QuestionServiceImpl implements QuestionService {
             }));
             return questionRepository.save(question);
         } else {
-            Question question1 = new Question();
-            question1.setId(question.getId());
-            question1.setTitle(question.getTitle());
-            question1.setDescription(question.getDescription());
-            question1.setUpdatedAt(new Date());
-            question1.setCreatedAt(question.getCreatedAt());
-            return questionRepository.save(question1);
+            Question questionModel = new Question();
+            questionModel.setId(question.getId());
+            questionModel.setTitle(question.getTitle());
+            questionModel.setDescription(question.getDescription());
+            questionModel.setUpdatedAt(new Date());
+            questionModel.setCreatedAt(question.getCreatedAt());
+            question.getAnswers().forEach(answer -> answer.setUpdatedAt(new Date()));
+            questionModel.setAnswers(question.getAnswers());
+            return questionRepository.save(questionModel);
         }
     }
 

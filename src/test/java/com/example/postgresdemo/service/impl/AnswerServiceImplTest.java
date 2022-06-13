@@ -7,6 +7,7 @@ import com.example.postgresdemo.service.AnswerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,11 @@ import java.util.List;
 @SpringBootTest
 class AnswerServiceImplTest {
 
-    @MockBean
+    @Mock
     AnswerRepository repository;
 
-    @Autowired
-    AnswerService answerService;
+    @InjectMocks
+    AnswerServiceImpl answerService;
 
     Answer answer;
     @BeforeEach
@@ -60,6 +62,14 @@ class AnswerServiceImplTest {
 
     @Test
     void deleteAndThrowException() {
+
+        //TODO pending test
+/*        Mockito.doReturn(false).when(repository).existsById(1);
+
+        AnswerServiceImpl dictMock = Mockito.mock(AnswerServiceImpl.class);
+        Mockito.when(dictMock.deleteById(Mockito.anyInt()))
+                .thenThrow(EntityNotFoundException.class);*/
+
     }
 
     @Test

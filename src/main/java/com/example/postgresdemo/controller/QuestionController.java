@@ -41,6 +41,7 @@ public class QuestionController {
                 .map(question -> {
                     question.setTitle(questionRequest.getTitle());
                     question.setDescription(questionRequest.getDescription());
+                    question.setAnswers(questionRequest.getAnswers());
                     return questionService.saveOrUpdate(question);
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
     }
