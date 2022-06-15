@@ -9,9 +9,14 @@ import com.example.postgresdemo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 @RestController
 public class QuestionController {
@@ -28,12 +33,22 @@ public class QuestionController {
     }
 
 
-    @PostMapping("/questions")
-    public QuestionDTO createQuestion(@Valid @RequestBody Question question) {
+    @PostMapping(value = "/questions")
+    public QuestionDTO createQuestion(
+            @NotNull @Valid @RequestBody Question question, @RequestPart(value = "file", required = true) MultipartFile file) {
+        try {
+            question.setQuestionPicture(file.getBytes());
+        } catch (IOException e) {
+
+            System.out.println(e);
+            e.printStackTrace();
+        }
+
         Question question1 = questionService.saveOrUpdate(question);
         QuestionDTO questionDTO = questionMapper.toDto(question1, new CycleAvoidingMappingContext());
         return questionDTO;
     }
+
     @PutMapping("/questions/{questionId}")
     public Question updateQuestion(@PathVariable Integer questionId,
                                    @Valid @RequestBody Question questionRequest) {
@@ -54,4 +69,6 @@ public class QuestionController {
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
     }
+
+
 }
