@@ -21,16 +21,15 @@ import java.util.List;
 @JsonPropertyOrder({"id", "title", "description", "answers" })
 public class Question extends AuditModel {
 
+    private static final long serialVersionUID = -5502043778089640767L;
+
 
     public Question(int id, String title, String description, List<Answer> answers) {
-
         this.id = id;
         this.title = title;
         this.description = description;
         this.answers = answers;
     }
-
-    private static final long serialVersionUID = -5502043778089640767L;
 
     @Id
     @GeneratedValue(generator = "question_generator")
@@ -52,4 +51,7 @@ public class Question extends AuditModel {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
     private List<Answer> answers;
 
+    @Lob
+    @Column(name="QUESTION_PIC", columnDefinition="BLOB NOT NULL")
+    private byte[] questionPicture;
 }
