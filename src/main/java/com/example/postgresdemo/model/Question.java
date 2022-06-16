@@ -52,6 +52,6 @@ public class Question extends AuditModel {
     private List<Answer> answers;
 
     @Lob
-    @Column(name="QUESTION_PIC", columnDefinition="BLOB NOT NULL")
-    private byte[] questionPicture;
+    @Nullable
+    private byte[] image;
 }

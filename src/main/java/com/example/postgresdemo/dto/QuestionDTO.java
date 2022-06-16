@@ -12,6 +12,5 @@ public class QuestionDTO extends AuditModelDTO {
     private String title;
     private String description;
     private List<AnswerDTO> answers;
-
-
+    private String image;
 }
