@@ -6,6 +6,7 @@ import com.example.postgresdemo.mapper.AnswerMapperImpl;
 import com.example.postgresdemo.mapper.CycleAvoidingMappingContext;
 import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.model.Question;
+import com.example.postgresdemo.properties.FileProperties;
 import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.AnswerService;
 import com.example.postgresdemo.service.QuestionService;
@@ -39,6 +40,7 @@ public class AnswerController {
 
     @GetMapping("/questions/{questionId}/answers")
     public List<AnswerDTO> getAnswersByQuestionId(@PathVariable int questionId) {
+
         Optional<Question> question = questionService.findById(questionId);
         return question.get().getAnswers().stream().map(answer -> mapper.toDto(answer, new CycleAvoidingMappingContext())).collect(Collectors.toList());
 
