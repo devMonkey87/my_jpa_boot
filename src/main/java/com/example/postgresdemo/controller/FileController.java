@@ -1,16 +1,22 @@
 package com.example.postgresdemo.controller;
 
+import com.example.postgresdemo.dto.ImageDTO;
+import com.example.postgresdemo.mapper.CycleAvoidingMappingContext;
+import com.example.postgresdemo.mapper.ImageMapper;
 import com.example.postgresdemo.model.Image;
 import com.example.postgresdemo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class FileController {
@@ -18,12 +24,15 @@ public class FileController {
     @Autowired
     ImageRepository imageRepository;
 
-/*
-    @GetMapping("/files/{id}")
-    ResponseEntity getImage(@PathParam( id) int id){
+    @Autowired
+    ImageMapper imageMapper;
 
-        return null;
-    }*/
+    @GetMapping("/files")
+    List<ImageDTO> getImages() {
+
+        //TODO: test this map to dto
+        return imageRepository.findAll().stream().map(image -> imageMapper.toDto(image, new CycleAvoidingMappingContext())).collect(Collectors.toList());
+    }
 
 
     @PostMapping("/files")
@@ -32,11 +41,12 @@ public class FileController {
         Image x = new Image();
         try {
             x.setImage(file.getBytes());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         imageRepository.save(x);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<String>(HttpStatus.CREATED);
 
     }
 
