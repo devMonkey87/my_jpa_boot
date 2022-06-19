@@ -2,6 +2,7 @@ package com.example.postgresdemo.mapper;
 
 import com.example.postgresdemo.Utils;
 import com.example.postgresdemo.dto.QuestionDTO;
+import com.example.postgresdemo.model.Image;
 import com.example.postgresdemo.model.Question;
 import org.mapstruct.*;
 
@@ -9,8 +10,8 @@ import org.mapstruct.*;
 public interface QuestionMapper {
 
     @Named("toBase64")
-    public static String toBase64(byte[] image) {
-        return Utils.decodeByteArrayToBase64(image);
+    public static String toBase64(Image image) {
+        return Utils.decodeByteArrayToBase64(image.getImage());
     }
 
     @Mappings({
@@ -19,7 +20,7 @@ public interface QuestionMapper {
     Question toModel(QuestionDTO dto, @Context CycleAvoidingMappingContext context);
 
     @Mappings({
-            @Mapping(target = "image", source = "image", qualifiedByName = "toBase64"),
+            @Mapping(target = "image", source = "image", qualifiedByName = "toBase64")
     })
     QuestionDTO toDto(Question model, @Context CycleAvoidingMappingContext context);
 }

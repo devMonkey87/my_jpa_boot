@@ -1,8 +1,13 @@
 package com.example.postgresdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,9 +16,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Getter
-@Setter
-@MappedSuperclass
+@Getter @Setter 
+@RequiredArgsConstructor
+@ToString 
+@EqualsAndHashCode
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},

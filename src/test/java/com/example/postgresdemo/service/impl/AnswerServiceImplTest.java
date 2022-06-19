@@ -1,3 +1,4 @@
+/*
 package com.example.postgresdemo.service.impl;
 
 import com.example.postgresdemo.model.Answer;
@@ -80,3 +81,4 @@ class AnswerServiceImplTest {
         Mockito.verify(repository).deleteById(1);
     }
 }
+*/
