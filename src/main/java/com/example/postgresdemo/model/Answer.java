@@ -9,11 +9,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter 
+@RequiredArgsConstructor
+@ToString 
+@EqualsAndHashCode
 @Table(name = "answers")
 public class Answer extends AuditModel {
 
