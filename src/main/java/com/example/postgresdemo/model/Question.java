@@ -1,6 +1,5 @@
 package com.example.postgresdemo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
@@ -37,14 +36,15 @@ public class Question extends AuditModel {
     private String title;
     @Column(columnDefinition = "text")
     private String description;
+
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
     private List<Answer> answers;
+
+
     @Lob
     @Nullable
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "image_id", nullable = true)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Image image;
 

@@ -6,8 +6,6 @@ import com.example.postgresdemo.mapper.ImageMapper;
 import com.example.postgresdemo.model.Image;
 import com.example.postgresdemo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -29,24 +27,20 @@ public class FileController {
 
     @GetMapping("/files")
     List<ImageDTO> getImages() {
-
-        //TODO: test this map to dto
         return imageRepository.findAll().stream().map(image -> imageMapper.toDto(image, new CycleAvoidingMappingContext())).collect(Collectors.toList());
     }
 
 
     @PostMapping("/files")
-    ResponseEntity<String> addImage(@RequestPart(value = "file", required = true) MultipartFile file) {
-
-        Image x = new Image();
+    ImageDTO addImage(@RequestPart(value = "file", required = true) MultipartFile file) {
+        Image image = new Image();
         try {
-            x.setImage(file.getBytes());
+            image.setImage(file.getBytes());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        imageRepository.save(x);
-        return new ResponseEntity<String>(HttpStatus.CREATED);
+        return imageMapper.toDto(imageRepository.save(image), new CycleAvoidingMappingContext());
 
     }
 
