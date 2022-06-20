@@ -20,7 +20,7 @@ public interface ImageMapper {
     @Mapping(source = "image", target = "image", ignore = true)
     Image toModel(ImageDTO dto, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "image", target = "image", ignore = true)
+    @Mapping(source = "image", target = "image", qualifiedByName = "toBase64")
     ImageDTO toDto(Image model, @Context CycleAvoidingMappingContext context);
 
 }
