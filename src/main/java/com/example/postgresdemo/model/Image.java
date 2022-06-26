@@ -1,17 +1,14 @@
 package com.example.postgresdemo.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter 
+@Getter
+@Setter
 @RequiredArgsConstructor
-@ToString 
+@ToString
 @EqualsAndHashCode
 public class Image {
 
@@ -22,4 +19,7 @@ public class Image {
     @Lob
     private byte[] image;
 
+    public Image(byte[] image) {
+        this.image = image;
+    }
 }

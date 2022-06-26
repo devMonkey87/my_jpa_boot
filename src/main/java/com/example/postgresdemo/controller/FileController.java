@@ -18,10 +18,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class FileController {
-
     @Autowired
     ImageRepository imageRepository;
-
     @Autowired
     ImageMapper imageMapper;
 
@@ -30,18 +28,13 @@ public class FileController {
         return imageRepository.findAll().stream().map(image -> imageMapper.toDto(image, new CycleAvoidingMappingContext())).collect(Collectors.toList());
     }
 
-
     @PostMapping("/files")
-    ImageDTO addImage(@RequestPart(value = "file", required = true) MultipartFile file) {
-        Image image = new Image();
+    ImageDTO addImage(@RequestPart(value = "file") MultipartFile file) {
         try {
-            image.setImage(file.getBytes());
-
+            return imageMapper.toDto(imageRepository.save(new Image(file.getBytes())), new CycleAvoidingMappingContext());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error");
         }
-        return imageMapper.toDto(imageRepository.save(image), new CycleAvoidingMappingContext());
-
     }
 
 }
