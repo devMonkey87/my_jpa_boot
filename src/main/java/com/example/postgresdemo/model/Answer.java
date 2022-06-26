@@ -1,7 +1,9 @@
 package com.example.postgresdemo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,8 +13,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
 @Table(name = "answers")
 public class Answer extends AuditModel {
 
