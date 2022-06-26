@@ -29,12 +29,8 @@ public class FileController {
     }
 
     @PostMapping("/files")
-    ImageDTO addImage(@RequestPart(value = "file") MultipartFile file) {
-        try {
-            return imageMapper.toDto(imageRepository.save(new Image(file.getBytes())), new CycleAvoidingMappingContext());
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
+    ImageDTO addImage(@RequestPart(value = "file") MultipartFile file) throws IOException {
+        return imageMapper.toDto(imageRepository.save(new Image(file.getBytes())), new CycleAvoidingMappingContext());
     }
 
 }
