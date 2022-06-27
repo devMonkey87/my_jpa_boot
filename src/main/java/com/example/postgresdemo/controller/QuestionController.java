@@ -29,7 +29,6 @@ public class QuestionController {
         return questionService.findAll(pageable);
     }
 
-
     @PostMapping(value = "/questions")
     public QuestionDTO createQuestion(
             @NotNull @Valid @RequestBody Question question) {
