@@ -6,7 +6,6 @@ import com.example.postgresdemo.mapper.AnswerMapperImpl;
 import com.example.postgresdemo.mapper.CycleAvoidingMappingContext;
 import com.example.postgresdemo.model.Answer;
 import com.example.postgresdemo.model.Question;
-import com.example.postgresdemo.properties.FileProperties;
 import com.example.postgresdemo.repository.QuestionRepository;
 import com.example.postgresdemo.service.AnswerService;
 import com.example.postgresdemo.service.QuestionService;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class AnswerController {
-
     @Autowired
     private AnswerService answerService;
 
@@ -40,10 +38,8 @@ public class AnswerController {
 
     @GetMapping("/questions/{questionId}/answers")
     public List<AnswerDTO> getAnswersByQuestionId(@PathVariable int questionId) {
-
         Optional<Question> question = questionService.findById(questionId);
         return question.get().getAnswers().stream().map(answer -> mapper.toDto(answer, new CycleAvoidingMappingContext())).collect(Collectors.toList());
-
     }
 
     @PostMapping("/questions/{questionId}/answers")
@@ -60,16 +56,16 @@ public class AnswerController {
 
     @PutMapping("/answers/{answerId}")
     public AnswerDTO updateAnswer(@PathVariable int answerId,
-                               @Valid @RequestBody Answer answerRequest) {
+                                  @Valid @RequestBody Answer answerRequest) {
         return mapper.toDto(answerService.saveOrUpdate(answerRequest), new CycleAvoidingMappingContext());
     }
 
     @DeleteMapping("/questions/{questionId}/answers/{answerId}")
     public ResponseEntity<Integer> deleteAnswer(@PathVariable Integer questionId,
-                                          @PathVariable Integer answerId) {
-      answerService.deleteById(answerId);
+                                                @PathVariable Integer answerId) {
+        answerService.deleteById(answerId);
 
-      return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
 
     }
 }
