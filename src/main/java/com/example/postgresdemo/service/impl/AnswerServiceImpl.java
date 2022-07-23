@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,14 +27,11 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer saveOrUpdate(Answer answer) {
-        if (!answerRepository.existsById(answer.getId())) {
-            return answerRepository.save(answer);
-        } else {
+        if (!answerRepository.existsById(answer.getId())) return answerRepository.save(answer);
+        else {
             Answer answer1 = new Answer();
             answer1.setQuestion(answer.getQuestion());
             answer1.setText(answer.getText());
-            answer1.setUpdatedAt(new Date());
-            answer1.setCreatedAt(answer.getCreatedAt());
             return answerRepository.save(answer1);
         }
     }
@@ -43,9 +39,8 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public void deleteById(int id) {
 
-        if (!answerRepository.existsById(id)){
+        if (!answerRepository.existsById(id))
             throw new EntityNotFoundException("The entity with provided ID does not exists");
-        }
         answerRepository.deleteById(id);
     }
 }
