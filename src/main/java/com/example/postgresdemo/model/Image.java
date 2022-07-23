@@ -16,10 +16,13 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String description;
+
     @Lob
     private byte[] image;
 
-    public Image(byte[] image) {
+    public Image(String description, byte[] image) {
+        this.description = description;
         this.image = image;
     }
 }

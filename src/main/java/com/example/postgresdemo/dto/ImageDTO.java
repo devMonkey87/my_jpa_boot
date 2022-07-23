@@ -1,18 +1,16 @@
 package com.example.postgresdemo.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter @Setter 
+@Getter
+@Setter
 @RequiredArgsConstructor
-@ToString 
+@ToString
 @EqualsAndHashCode
 public class ImageDTO {
 
     private int id;
+    private String description;
     private String image;
 
 }
