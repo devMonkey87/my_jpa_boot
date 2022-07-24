@@ -10,6 +10,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Table(name = "IMAGES")
 public class Image {
 
     @Id
