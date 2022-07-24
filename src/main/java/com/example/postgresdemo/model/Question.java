@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "questions")
+@Table(name = "QUESTIONS")
 @JsonPropertyOrder({"id", "title", "description", "answers"})
 public class Question extends AuditModel {
 

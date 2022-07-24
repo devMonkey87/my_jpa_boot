@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name = "answers")
+@Table(name = "ANSWERS")
 public class Answer extends AuditModel {
 
     @Id
