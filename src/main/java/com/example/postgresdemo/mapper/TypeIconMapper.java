@@ -17,8 +17,8 @@ public interface TypeIconMapper {
     }
 
     @Mapping(source = "data", target = "data", qualifiedByName = "toBase64")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdAt")
+    @Mapping(target = "updatedAt")
     TypeIconDTO toDto(TypeIcon model);
 
     @Mapping(source = "data", target = "data", ignore = true)
