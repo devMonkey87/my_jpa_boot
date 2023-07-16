@@ -2,10 +2,7 @@ package com.example.postgresdemo.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -13,11 +10,11 @@ import javax.persistence.Table;
 public class Pokemon extends GenericModel {
 
     String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id")
-            
     Type type;
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id")
     Image image;
 

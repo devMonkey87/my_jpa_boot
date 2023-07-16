@@ -13,11 +13,11 @@ public class Type implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    
+
     @Enumerated(EnumType.STRING)
     PokemonType type;
     String description;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "icon_id")
     TypeIcon icon;
 }

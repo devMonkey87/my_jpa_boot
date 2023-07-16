@@ -12,14 +12,21 @@ public interface ImageMapper {
 
 
     @Named("toBase64")
-    public static String toBase64(byte[] image) {
+    static String toBase64(byte[] image) {
         return Utils.decodeByteArrayToBase64(image);
     }
 
-    @Mapping(source = "image", target = "image", qualifiedByName = "toBase64")
-    public ImageDTO toDto(Image model);
+    @Named("fromBase64")
+    static byte[] fromBase64(String base64) {
+        return java.util.Base64.getDecoder().decode(base64);
+    }
 
-    @Mapping(source = "image", target = "image", ignore = true)
-    public Image toModel(ImageDTO dto);
+
+    @Mapping(source = "image", target = "image", qualifiedByName = "toBase64")
+    ImageDTO toDto(Image model);
+
+    @Mapping(source = "image", target = "image", qualifiedByName = "fromBase64")
+    Image toModel(ImageDTO dto);
+
 
 }
