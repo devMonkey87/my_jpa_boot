@@ -10,11 +10,11 @@ import javax.persistence.*;
 public class Pokemon extends GenericModel {
 
     String name;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "type_id")
     Type type;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "image_id")
     Image image;
 
