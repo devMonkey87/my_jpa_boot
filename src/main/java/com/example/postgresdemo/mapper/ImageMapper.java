@@ -26,6 +26,7 @@ public interface ImageMapper {
     ImageDTO toDto(Image model);
 
     @Mapping(source = "image", target = "image", qualifiedByName = "fromBase64")
+    @Mapping(target = "id", ignore = true)
     Image toModel(ImageDTO dto);
 
 

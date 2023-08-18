@@ -36,8 +36,10 @@ public class PokemonController {
 
 
     @PostMapping("/pokemons")
-    public PokemonDTO addAnswer(@Valid @RequestBody Pokemon pokemon) {
-        Pokemon savedPokemon = pokemonService.saveOrUpdate(pokemon);
+    public PokemonDTO createPokemon(@Valid @RequestBody PokemonDTO pokemonDTO) {
+        Pokemon model = mapper.toModel(pokemonDTO);
+        System.out.println("POKEMON A DB: " + model.toString());
+        Pokemon savedPokemon = pokemonService.saveOrUpdate(model);
         return mapper.toDto(savedPokemon);
     }
 
