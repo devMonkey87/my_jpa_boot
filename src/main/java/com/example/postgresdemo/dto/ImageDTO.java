@@ -5,6 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class ImageDTO {
 
